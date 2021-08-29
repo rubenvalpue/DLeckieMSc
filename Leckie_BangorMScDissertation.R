@@ -10,14 +10,15 @@
 #install.packages("dplyr")
 #Install plotrix package
 #install.packages("plotrix")
+#insatll read excel package
+#install.packages("readxl")
 ##############################################################################
 #Start of Script when opening again
 
 #clean memory
 rm(list=ls())
 
-#Set working directory
-#setwd("C:/Users/dunca/OneDrive/Documents/MSc_THESIS/R Stats/R Script and Analysis")
+
 #load Packages 
 library(metafor)
 library(dplyr)
@@ -60,9 +61,9 @@ robustml_m <- rma.mv(yi = Zr, V = SEV, W = wi, random = list(~1 | Paper, ~1 | ID
 sum_basicmodel <- summary(robustml_m) 
 sum_basicmodel
 # AIC = 31.3216, Q=87.7453, p-val < .0001
-# stimate      se    zval    pval   ci.lb   ci.ub 
+# estimate      se    zval    pval   ci.lb   ci.ub 
 #  0.2743    0.1101  2.4904  0.0128  0.0584  0.4901   
-# p=value = 0.0118 < 0.05 so there is a significant effect of CWD Volume on fungal diversity.
+# p=value = 0.0128 < 0.05 so there is a significant effect of CWD Volume on fungal diversity.
 
 # HETEROGENEITY BASIC MODEL
 
@@ -77,8 +78,8 @@ sigmaBasic2.2 <- sigmasBasic[2]
 mean_SEV <- mean(dat3$SEV)
 I2Basic <- (sigmaBasic2.1 + sigmaBasic2.2)/(sigmaBasic2.1 + sigmaBasic2.2 + mean_SEV)
 I2Basic
-#I^2 is 0.6425621 which is 64.25% 
-# This means that 64.25% of the variation in effect sizes is due to the between-study variance
+#I^2 is 0.5235751 which is 52.36% 
+# This means that 52.36% of the variation in effect sizes is due to the between-study variance
 # This is Medium Heterogeneity 
 
 # Moderators 
@@ -91,8 +92,8 @@ sum_Biome <- summary(robustml_Biome)
 sum_Biome
 #AIC 32.2184
 #Test of Moderators (Coefficient 2)
-#QM(df = 1) = 0.1474, p-val = 0.7011
-#p-value of test of moderators is not significant, so Biome does not significantly account for any variation in the data
+#QM(df = 1) = 0.1474, p-val = 0.7011  
+#p-value of test of moderators is not significant, > 0.05, so Biome does not significantly account for any variation in the data
 
 
 # HETEROGENEITY Biome
@@ -105,7 +106,7 @@ sigmaBiome2.2 <- sigmasBiome[2]
 mean_SEV <- mean(dat3$SEV)
 I2Biome <- (sigmaBiome2.1 + sigmaBiome2.2)/(sigmaBiome2.1 + sigmaBiome2.2 + mean_SEV)
 I2Biome
-# I^2 is 0.6546053 = 65.46% this is Medium Heterogeneity 
+# I^2 is 0.536737 = 53.67% this is Medium Heterogeneity 
 
 # VISUALISATION Biome
 # Visualize biome using boxplot (PlotCI)
@@ -131,8 +132,8 @@ sum_For_Type  <- summary(robustml_MA1_For_Type )
 sum_For_Type
 #AIC = 36.6193
 #Test of Moderators (coefficient 2):
-#QM(df = 2) =0.1020, p-val = 0.9503
-#p-value of test of moderators is significant, so CWD_type does significantly account for variation in the data
+#QM(df = 2) =0.0823, p-val = 0.9597
+#p-value of test of moderators is not significant, > 0.05, so For_type does not significantly account for variation in the data
 
 #                  estimate      se     zval    pval    ci.lb   ci.ub 
 #intrcpt              0.3150  0.2016   1.5627  0.1181  -0.0801  0.7101 
@@ -149,7 +150,7 @@ sigmaFor_Type2.2 <- sigmasFor_Type[2]
 mean_SEV <- mean(dat3$SEV)
 I2For_Type <- (sigmaFor_Type2.1 + sigmaFor_Type2.2)/(sigmaFor_Type2.1 + sigmaFor_Type2.2 + mean_SEV)
 I2For_Type
-#I^2 is 0.5998545 = 59.98% this is Medium Heterogeneity
+#I^2 is 0.5998545 = 59.99% this is Medium Heterogeneity
 
 
 # VISUALISATION For_Type
@@ -211,7 +212,7 @@ sum_Type
 #AIC = 39.0493
 #Test of Moderators (coefficient 2):
 #QM(df = 3) = 5.2958, p-val = 0.1514
-#p-value of test of moderators is significant, so CWD_type does significantly account for variation in the data
+#p-value of test of moderators is not significant, > 0.05, so Fo Type does not significantly account for variation in the data
 
 # HETEROGENEITY FO Type
 # Calculate the I^2 = (sigma2.1 + sigma2.2)/(sigma2.1 + sigma2.2 + mean_v)
@@ -316,14 +317,14 @@ sum_basicmodel
 # estimate v as the mean of the vi = average mean variance
 # Save sigma2.1 and 2.2 for heterogeneity calculation
 
-sigmasBasic <- sum_basicmodel$sigma2
-sigmaBasic2.1 <- sigmasBasic[1]
-sigmaBasic2.2 <- sigmasBasic[2]
-mean_SEV <- mean(dat1$SEV)
-I2Basic <- (sigmaBasic2.1 + sigmaBasic2.2)/(sigmaBasic2.1 + sigmaBasic2.2 + mean_SEV)
-I2Basic
-#I^2 = 0.476567 = 47.65% of the variation in effect sizes is due to the between-study variance
-# This is Medium Heterogeneity
+sigmasBasicma2 <- sum_basicma2model$sigma2
+sigmaBasicma22.1 <- sigmasBasicma2[1]
+sigmaBasicma22.2 <- sigmasBasicma2[2]
+mean_SEV <- mean(dat4$SEV)
+I2Basicma2 <- (sigmaBasicma22.1 + sigmaBasicma22.2)/(sigmaBasicma22.1 + sigmaBasicma22.2 + mean_SEV)
+I2Basicma2
+#I^2 = 0.2219574 = 22.2% of the variation in effect sizes is due to the between-study variance
+# This is Low Heterogeneity
 
 ###########################################################
 
@@ -336,16 +337,15 @@ I2Basic
 robustml_MA2_CWD_Type <- rma.mv(yi = Zr, V = SEV, W = wi, random = list(~1 | Paper, ~1 | ID), mod = ~CWD_Type , method = "REML", data = dat4)
 sum_CWD_Type  <- summary(robustml_MA2_CWD_Type )
 sum_CWD_Type 
-#AIC = 30.6764
+#AIC = 29.9257
 #Test of Moderators (coefficient 2:3):
-#QM(df = 2) =  6.0257, p-val = 0.1104
-#p-value of test of moderators is significant, so CWD_type does significantly account for variation in the data
+#QM(df = 2) =  5.3256, p-val = 0.0698
+#p-value of test of moderators is not significant, > 0.05, so CWD_type does not significantly account for variation in the data
 
-#            estimate      se     zval    pval    ci.lb   ci.ub 
-#intrcpt          0.4133  0.2881   1.4344  0.1515  -0.1514  0.9780    
-#CWD_TypeLog     -0.3606  0.6685  -0.5394  0.5896  -1.6708  0.9496    
-#CWD_TypeSnag    -0.1396  0.3651  -0.3823  0.7023  -0.8550  0.5759    
-#CWD_TypeStump   -0.6608  0.3593  -1.8393  0.0659  -1.3650  0.0434
+#        estimate      se     zval    pval    ci.lb   ci.ub 
+#intrcpt          0.4068  0.2862   1.4214  0.1552  -0.1541  0.9678    
+#CWD_TypeSnag    -0.1331  0.3604  -0.3693  0.7119  -0.8394  0.5732    
+#CWD_TypeStump   -0.6544  0.3574  -1.8311  0.0671  -1.3548  0.0461  . 
 
 
 # HETEROGENEITY CWD_Type
@@ -355,10 +355,10 @@ sum_CWD_Type
 sigmasCWD_Type <- sum_CWD_Type$sigma2
 sigmaCWD_Type2.1 <- sigmasCWD_Type[1]
 sigmaCWD_Type2.2 <- sigmasCWD_Type[2]
-mean_SEV <- mean(dat1$SEV)
+mean_SEV <- mean(dat4$SEV)
 I2CWD_Type <- (sigmaCWD_Type2.1 + sigmaCWD_Type2.2)/(sigmaCWD_Type2.1 + sigmaCWD_Type2.2 + mean_SEV)
 I2CWD_Type
-#I^2 is 0.7292195 = 72.92% this is Medium Heterogeneity
+#I^2 is 0.4599882 = 46% this is Medium Heterogeneity
 
 # VISUALISATION CWD_Type
 # Visualize CWD_Type using boxplot (PlotCI)
@@ -377,18 +377,12 @@ axis(1, at=1:3,labels=CWD_Type_Names, cex.lab=1.2)
 # Add a horizontal line at y=0 in color blue
 abline(h=0, col='blue')
 
-
-
 ##################################################################################################
 # PUBLICATION BIAS
 
 # Check for publication bias using the funnel()
 # Use to detect a funnel asymmetry (a sign of publication bias),
 funnel(robustml_MA2, main="Funnel plot - Publication bias MA2")
-
-#Time Lag Bias MA2
-# Check for time-lag bias
-# following http://www.metafor-project.org/doku.php/plots:cumulative_forest_plot
 
 ##############################################################################################
 
