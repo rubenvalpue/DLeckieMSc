@@ -304,8 +304,8 @@ View(dat4)
 # This model uses the weights (make it robust) and a multilevel model (paper bias)
 # Model without moderators
 robustml_MA2 <- rma.mv(yi = Zr, V = SEV, W = wi, random = list(~1 | Paper, ~1 | ID), method = "REML", data = dat4)
-sum_basicmodel <- summary(robustml_MA2)
-sum_basicmodel
+sum_basicmodelma2 <- summary(robustml_MA2)
+sum_basicmodelma2
 #AIC = 46.2692  Q(df=12) = 52.7649, p-val < .0001
 #pvalue= 0.0527  >0.05 so there is no significant effect of CWD Volume and fungal diversity. this is due to the smaller sample size. 
 #estimate = 0.2797         se = 0.1443   zval = 1.9377   pval = 0.0527    ci.lb = -0.0032   ci.ub = 0.5626 
@@ -317,11 +317,11 @@ sum_basicmodel
 # estimate v as the mean of the vi = average mean variance
 # Save sigma2.1 and 2.2 for heterogeneity calculation
 
-sigmasBasicma2 <- sum_basicma2model$sigma2
+sigmasBasicma2 <- sum_basicmodelma2$sigma2
 sigmaBasicma22.1 <- sigmasBasicma2[1]
 sigmaBasicma22.2 <- sigmasBasicma2[2]
-mean_SEV <- mean(dat4$SEV)
-I2Basicma2 <- (sigmaBasicma22.1 + sigmaBasicma22.2)/(sigmaBasicma22.1 + sigmaBasicma22.2 + mean_SEV)
+mean_SEVma2 <- mean(dat4$SEV)
+I2Basicma2 <- (sigmaBasicma22.1 + sigmaBasicma22.2)/(sigmaBasicma22.1 + sigmaBasicma22.2 + mean_SEVma2)
 I2Basicma2
 #I^2 = 0.2219574 = 22.2% of the variation in effect sizes is due to the between-study variance
 # This is Low Heterogeneity
@@ -335,7 +335,7 @@ I2Basicma2
 
 # Moderator CWD_Type
 robustml_MA2_CWD_Type <- rma.mv(yi = Zr, V = SEV, W = wi, random = list(~1 | Paper, ~1 | ID), mod = ~CWD_Type , method = "REML", data = dat4)
-sum_CWD_Type  <- summary(robustml_MA2_CWD_Type )
+sum_CWD_Type  <- summary(robustml_MA2_CWD_Type)
 sum_CWD_Type 
 #AIC = 29.9257
 #Test of Moderators (coefficient 2:3):
@@ -355,8 +355,8 @@ sum_CWD_Type
 sigmasCWD_Type <- sum_CWD_Type$sigma2
 sigmaCWD_Type2.1 <- sigmasCWD_Type[1]
 sigmaCWD_Type2.2 <- sigmasCWD_Type[2]
-mean_SEV <- mean(dat4$SEV)
-I2CWD_Type <- (sigmaCWD_Type2.1 + sigmaCWD_Type2.2)/(sigmaCWD_Type2.1 + sigmaCWD_Type2.2 + mean_SEV)
+mean_SEVma2 <- mean(dat4$SEV)
+I2CWD_Type <- (sigmaCWD_Type2.1 + sigmaCWD_Type2.2)/(sigmaCWD_Type2.1 + sigmaCWD_Type2.2 + mean_SEVma2)
 I2CWD_Type
 #I^2 is 0.4599882 = 46% this is Medium Heterogeneity
 
